@@ -70,11 +70,104 @@ There will only be a user role in this app. No other roles.
   ex: isRaining ? rainingImg() : otherWeatherImg()
 
 ## Tasks
+
 **BackEnd**
-- Set up
-    - MongoDb
-    - Intellij
+
+- Set up (1 hour)
+  - MongoDb (30 min)
+  - Intellij (30 min)
 - Layers
+  - TESTING MOCKITO (3 hours total)
+    - Data Layer testing (1.5 hours)
+    - Domain Layer testing (1.5 hours)
+  - Models (30 min total)
+    - User
+    - Location
+    - Weather
+    - Weather Preference
+    - Clothing Item
+    - Clothing Outfit
+  - Data Layer (30 min each)
+    - Repositories(Using Mongo spring default methods)
+    - Interface implements mongoDB repo
+      - Label Collections
+        - User
+        - Location
+        - Weather
+        - Weather Preference
+        - Clothing Item
+        - Clothing Outfit
+  - Service Layer (1 hour each)
+    - User
+      - Validation
+      - MongoDB Methods
+        - add(repo.save())
+        - updated(repo.save())
+        - delete (repo.deleteById())
+        - findById()
+    - Location
+      - Validation
+      - MongoDB Methods
+        - add(repo.save())
+        - updated(repo.save())
+        - delete (repo.deleteById())
+        - findById()
+    - Weather
+      - Validation
+      - MongoDB Methods
+        - add(repo.save())
+        - updated(repo.save())
+        - delete (repo.deleteById())
+        - findById()
+    - Weather Preference
+      - Validation
+      - MongoDB Methods
+        - add(repo.save())
+        - updated(repo.save())
+        - delete (repo.deleteById())
+        - findById()
+        - findAll()
+        - count()
+    - Clothing Item
+      - Validation
+      - MongoDB Methods
+        - add(repo.save())
+        - updated(repo.save())
+        - delete (repo.deleteById())
+        - findById()
+    - Clothing Outfit
+      - Validation
+      - MongoDB Methods
+        - add(repo.save())
+        - updated(repo.save())
+        - delete (repo.deleteById())
+        - findById()
+  - Controller Layer ( 30 min each)
+    - Implement Service Methods
+    - User
+    - Location
+    - Weather
+    - Weather Preference
+    - Clothing Item
+    - Clothing Outfit
+    - Main App
 - Connecting to FrontEnd
+  - CORS
 
 **FrontEnd**
+
+- Set up (1 hour)
+  - Npm commands, organize packages, imports, github
+- Components (1 hour each)
+
+  - User (UseContext)
+  - NavBar
+  - Home
+    - import <Weather/>
+  - Weather
+    - Location inside weather
+  - Weather Preference
+  - Clothing Item
+  - Clothing Outfit
+
+  TIMELINE FRIDAY EARLIEST
