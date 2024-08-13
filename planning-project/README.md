@@ -1,12 +1,36 @@
 There will only be a user role in this app. No other roles.
+APP NAME :
+WEDER
 
 ## Casual User Story
 
-- As a casual user I will be able to go to the site and check out the home page and weather page. I will be able to check the weather for one location at a time of my location of choice. In the home page I will be able to see the name and the UI(decided later)I go to the weather page, enter my location and it will show weather details to be decided by the developer(me).
+- As a casual user I will be able to go to the site and check out the home page and see a welcome UI.
+- I will be able to select the weather tab and load its UI.
+- I will be able to enter the info for one location at a time of my location of choice.
+- I will be able to see the weather of that location once entered.
+- I will be able to go the the log in tab to create or login.
 
 ## Authenticated User Story
 
-- As an authenticated user I will be able to view all the pages on the site. Home page, weather page, saved weather page, clothing preferences and clothing page. The home page is different, my main saved weather preference will be displayed to show me the weather of my favorited location. The weather page is the same as above but I will be able to see the "save button" which will allow the weather to be saved in my saved weather page. In this page I will be able to view my saved preferences, select my favorite (loads in home page), update a preference location or delete a preference all together. My clothing preference page will allow me to set my preferences of clothing depending on weather. For example I will be able to input that my sweater is used for certain weather conditions. My raincoat only for when its raining, and so on depending on the clothes I want to input. The last page will showcase which outfit to put on depending on the weather location I have set to my favorite. This page will not have any modifications since it is random, although I can change my favorited location which will change the outcome but that is not done in this page.
+- As an authenticated user I will be able to login.
+- I will be able to view all the pages on the site.
+- I will be able to go to the home page and see its UI.
+- I will be able to see my favorited location's weather in my home page.
+- I will be able to see my name in the navbar
+- I will be able to visit the weather page is the same UI as above
+- I will be able to see the "save button" in the weather page which will allow the weather to be saved in my weather preferences tab.
+- I will be able to save up to 3 preferences at a time
+- I will be able to visit the weather preferences tab
+- I will be able to view my saved preferences
+- I will be able to select my favorite weather preference(loads in home page)
+- I will be able update a preference location
+- I will be able to delete a preference all together.
+- I will be able to see the clothing preference page
+- I will allow me to set my preferences of clothing depending on weather. For example I will be able to input that my sweater is used for certain weather conditions. My raincoat only for when its raining, and so on depending on the clothes I want to input.
+- I will be able to see the outfit page.
+- I will be able to see a randomized outfit based on my clothin preferences and weather preferences.
+- I will not be able to do any CRUD on here, all UI is based on other pages.
+- I will be able to update outfit based on weather location chosen.
 
 ## TECHNOLOGY
 
