@@ -25,10 +25,29 @@ public class LocationService {
     }
 
     public Location addLocation(Location location){
+        Result<Void> result = validateSave(location);
+
+        if(result.isSuccess()){
+            result.addMessage("Location added!", ResultType.SUCCESS);
+        }
+
         return repository.save(location);
     }
 
     public void deleteLocation(Integer locationId){
         repository.deleteById(locationId);
+    }
+
+    public Result<Void> validateSave(Location location){
+        Result<Void> result = new Result<>();
+
+        if(location.getCity() == null){
+            result.addMessage("City is required!", ResultType.INVALID);
+        }
+
+        if(location.getState() == null){
+            result.addMessage("State is required!", ResultType.INVALID);
+        }
+        return result;
     }
 }

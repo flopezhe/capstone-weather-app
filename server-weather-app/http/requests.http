@@ -1,0 +1,23 @@
+@url = http://localhost:8080
+
+GET {{url}}/api/locations HTTP/1.1
+
+###
+
+POST {{url}}/api/locations HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "locationId": 1,
+    "latitude": 100.100,
+    "longitude": 100.100,
+    "city": "San Diego",
+    "state": "CA"
+}
+
+###
+
+DELETE {{url}}/api/locations/1 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
