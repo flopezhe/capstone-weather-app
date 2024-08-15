@@ -16,37 +16,52 @@ public class WeatherService {
         return weatherRepository.findById(id).orElse(null);
     }
 
-    public Weather saveWeather(Weather weather) {
-        return weatherRepository.save(weather);
+    public Result<Weather> saveWeather(Weather weather) {
+        Result<Weather> result = validateSave(weather);
+
+        if (result.isSuccess()) {
+            weatherRepository.save(weather);
+        } else {
+            result.addMessage("Weather not saved", ResultType.INVALID);
+        }
+
+        return result;
     }
 
-    public void deleteWeather(String id) {
-        weatherRepository.deleteById(id);
+    public boolean deleteWeather(String id) {
+        boolean result = weatherRepository.existsById(id);
+
+        if (result) {
+            weatherRepository.deleteById(id);
+        }
+
+        return result;
     }
 
-    public void updateWeather(int id, Double latitudeId, Double longitudeId, List<String> tempAndDayAndRain, int temperature, String tempUnit, String windUnit, String precipitationUnit, String timezone) {
-        Weather weather = new Weather();
-        weather.setWeatherId(id);
-        weather.setLatitude(latitudeId);
-        weather.setLongitude(longitudeId);
-        weather.setTempAndDayAndRain(tempAndDayAndRain);
-        weather.setTemperature(temperature);
-        weather.setTempUnit(tempUnit);
-        weather.setWindSpeedUnit(windUnit);
-        weather.setPrecipitationUnit(precipitationUnit);
-        weather.setTimezone(timezone);
-        weatherRepository.save(weather);
+    public Result<Weather> updateWeather(Weather weather) {
+        Result<Weather> result = validateSave(weather);
+
+        if (result.isSuccess()) {
+            weatherRepository.save(weather);
+        } else {
+            result.addMessage("Weather not updated", ResultType.INVALID);
+        }
+
+        return result;
     }
 
-    public void validateSave(Weather weather) {
+    public Result<Weather> validateSave(Weather weather) {
+        Result<Weather> result = new Result<>();
+
         if (weather.getLatitude() < -90 || weather.getLatitude() > 90) {
-            throw new IllegalArgumentException("Location ID is required!");
+            result.addMessage("Latitude must be between -90 and 90", ResultType.INVALID);
         }
 
         if (weather.getLongitude() < -180 || weather.getLongitude() > 180) {
-            throw new IllegalArgumentException("Date is required!");
+            result.addMessage("Longitude must be between -180 and 180", ResultType.INVALID);
         }
 
 
+        return result;
     }
 }

@@ -1,6 +1,7 @@
 package farid.weather.domain;
 
 import farid.weather.data.ClothingOutfitRepository;
+import farid.weather.models.ClothingItem;
 import farid.weather.models.ClothingOutfit;
 import org.springframework.stereotype.Service;
 
@@ -37,16 +38,27 @@ public class ClothingOutfitService {
         return clothingOutfitRepository.findById(id).orElse(null);
     }
 
-    public void deleteClothingOutfit(String id) {
-        clothingOutfitRepository.deleteById(id);
+    public boolean deleteClothingOutfit(String id) {
+        boolean result = clothingOutfitRepository.existsById(id);
+
+        if (result) {
+            clothingOutfitRepository.deleteById(id);
+        }
+
+        return result;
     }
 
-    public void updateClothingOutfit(String id, String outfitName, List<String> clothingItemIds) {
-        ClothingOutfit clothingOutfit = new ClothingOutfit();
-        clothingOutfit.setId(id);
-        clothingOutfit.setOutfitName(outfitName);
-        clothingOutfit.setClothingItemIds(clothingItemIds);
-        clothingOutfitRepository.save(clothingOutfit);
+    public Result<ClothingOutfit> updateClothingOutfit(ClothingOutfit clothingOutfit) {
+        Result<ClothingOutfit> result = validateSave(clothingOutfit);
+
+        if (result.isSuccess()) {
+            clothingOutfitRepository.save(clothingOutfit);
+        } else {
+            result.addMessage("Clothing Outfit not updated", ResultType.INVALID);
+        }
+
+        return result;
+
     }
 
     public Result<ClothingOutfit> validateSave(ClothingOutfit clothingOutfit){

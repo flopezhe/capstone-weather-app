@@ -15,7 +15,7 @@ import java.util.List;
 public class Weather {
 
     @Id
-    private int weatherId;
+    private String weatherId;
 
     private double latitude;
 
