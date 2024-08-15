@@ -21,7 +21,7 @@ public class ClothingItem {
 
     private String clothingImage;
 
-    private int wearOnRainyDay;
+    private String wearOnRainyDay;
 
-    private int wearOnHotDay;
+    private String wearOnHotDay;
 }

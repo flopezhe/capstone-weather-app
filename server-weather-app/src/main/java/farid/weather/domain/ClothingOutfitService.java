@@ -2,10 +2,12 @@ package farid.weather.domain;
 
 import farid.weather.data.ClothingOutfitRepository;
 import farid.weather.models.ClothingOutfit;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 
+@Service
 public class ClothingOutfitService {
 
     private final ClothingOutfitRepository clothingOutfitRepository;
