@@ -17,14 +17,14 @@ public class ClothingItemController {
         this.clothingItemService = clothingItemService;
     }
 
-    @GetMapping("/{agentId}")
+    @GetMapping("/{clothingItemId}")
     public ClothingItem findById(@PathVariable String clothingItemId) {
         return clothingItemService.findClothingItemById(clothingItemId);
     }
 
 
     @PostMapping
-    public ResponseEntity<Object> add(ClothingItem clothingItem) {
+    public ResponseEntity<Object> add(@RequestBody ClothingItem clothingItem) {
         Result<ClothingItem> result = clothingItemService.saveClothingItem(clothingItem);
 
         if(result.isSuccess()) {

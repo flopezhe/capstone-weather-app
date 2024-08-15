@@ -2,9 +2,11 @@ package farid.weather.domain;
 
 import farid.weather.data.WeatherRepository;
 import farid.weather.models.Weather;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class WeatherService {
     private final WeatherRepository weatherRepository;
 

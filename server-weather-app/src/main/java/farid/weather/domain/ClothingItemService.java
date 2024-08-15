@@ -24,7 +24,9 @@ public class ClothingItemService {
 
         Result<ClothingItem> result = validateSave(clothingItem);
 
+
         if (result.isSuccess()) {
+            System.out.println(clothingItem);
             clothingItemRepository.save(clothingItem);
         } else {
             result.addMessage("Clothing Item not saved", ResultType.INVALID);
@@ -63,26 +65,27 @@ public class ClothingItemService {
 
     public Result<ClothingItem> validateSave(ClothingItem clothingItem) {
         Result<ClothingItem> result = new Result<>();
+//
+//        if (clothingItem.getClothingType() == null) {
+//            result.addMessage("Clothing Type is required!", ResultType.INVALID);
+//        }
+//
+//        if (clothingItem.getClothingName() == null) {
+//            result.addMessage("Clothing Name is required!", ResultType.INVALID);
+//        }
+//
+//        if (clothingItem.getClothingImage() == null) {
+//            result.addMessage("Clothing Image is required!", ResultType.INVALID);
+//        }
 
-        if (clothingItem.getClothingType() == null) {
-            result.addMessage("Clothing Type is required!", ResultType.INVALID);
-        }
-
-        if (clothingItem.getClothingName() == null) {
-            result.addMessage("Clothing Name is required!", ResultType.INVALID);
-        }
-
-        if (clothingItem.getClothingImage() == null) {
-            result.addMessage("Clothing Image is required!", ResultType.INVALID);
-        }
-
-        if (!clothingItem.getWearOnRainyDay().equalsIgnoreCase("yes") && !clothingItem.getWearOnRainyDay().equalsIgnoreCase("no")) {
-            result.addMessage("Wear On Rainy Day must be yes or no!", ResultType.INVALID);
-        }
-
-        if (!clothingItem.getWearOnHotDay().equalsIgnoreCase("yes") && !clothingItem.getWearOnHotDay().equalsIgnoreCase("no")) {
-            result.addMessage("Wear On Hot Day must be yes or no!", ResultType.INVALID);
-        }
+//        if (clothingItem.getWearOnRainyDay() == null) {
+//            result.addMessage("Wear On Rainy Day is required!", ResultType.INVALID);
+//        }
+//
+//
+//        if (clothingItem.getWearOnHotDay() == null) {
+//            result.addMessage("Wear On Hot Day is required!", ResultType.INVALID);
+//        }
 
         return result;
     }

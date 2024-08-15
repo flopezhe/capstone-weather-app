@@ -13,13 +13,10 @@ export default function NavBar() {
             <NavLink to="/weather">Weather</NavLink>
           </li>
           <li>
-            <NavLink to="/weather-preferences">Weather Preferences</NavLink>
+            <NavLink to="/clothing-fit">Clothing Outfit</NavLink>
           </li>
           <li>
-            <NavLink to="/register">Register</NavLink>
-          </li>
-          <li>
-            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/add-clothing-item">Add Clothing Item</NavLink>{" "}
           </li>
         </ul>
       </div>
