@@ -16,6 +16,10 @@ public class ClothingItemService {
         return clothingItemRepository;
     }
 
+    public ClothingItem findClothingItemById(String id) {
+        return clothingItemRepository.findById(id).orElse(null);
+    }
+
     public Result<ClothingItem> saveClothingItem(ClothingItem clothingItem) {
 
         Result<ClothingItem> result = validateSave(clothingItem);
@@ -33,19 +37,28 @@ public class ClothingItemService {
         return clothingItemRepository.findById(id).orElse(null);
     }
 
-    public void deleteClothingItem(String id) {
-        clothingItemRepository.deleteById(id);
+    public boolean deleteClothingItem(String id) {
+        boolean result = clothingItemRepository.existsById(id);
+
+        if (result) {
+            clothingItemRepository.deleteById(id);
+        }
+
+        return result;
     }
 
-    public void updateClothingItem(String id, String clothingType, String clothingName, String clothingImage, String wearOnRainyDay, String wearOnHotDay) {
-        ClothingItem clothingItem = new ClothingItem();
-        clothingItem.setId(id);
-        clothingItem.setClothingType(clothingType);
-        clothingItem.setClothingName(clothingName);
-        clothingItem.setClothingImage(clothingImage);
-        clothingItem.setWearOnRainyDay(wearOnRainyDay);
-        clothingItem.setWearOnHotDay(wearOnHotDay);
-        clothingItemRepository.save(clothingItem);
+    public Result<ClothingItem> updateClothingItem(ClothingItem clothingItem) {
+        Result<ClothingItem> result = validateSave(clothingItem);
+
+        if (result.isSuccess()) {
+            clothingItemRepository.save(clothingItem);
+        } else {
+            result.addMessage("Clothing Item not updated", ResultType.INVALID);
+        }
+
+        return result;
+
+
     }
 
     public Result<ClothingItem> validateSave(ClothingItem clothingItem) {

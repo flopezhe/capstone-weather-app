@@ -30,9 +30,14 @@ public class AppUserService {
         return appUserRepository.findByUserName(userName);
     }
 
-    public void deleteAppUser(String userName) {
-        AppUser appUser = appUserRepository.findByUserName(userName);
-        appUserRepository.delete(appUser);
+    public boolean deleteAppUser(String userName) {
+        boolean result = appUserRepository.existsById(userName);
+
+        if (result) {
+            appUserRepository.deleteById(userName);
+        }
+
+        return result;
     }
 
     public Result<AppUser> updateAppUser(AppUser appUser) {

@@ -1,10 +1,11 @@
 package farid.weather.controller;
 
 import farid.weather.domain.ClothingItemService;
+import farid.weather.domain.Result;
 import farid.weather.models.ClothingItem;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/clothing_item")
@@ -16,9 +17,45 @@ public class ClothingItemController {
         this.clothingItemService = clothingItemService;
     }
 
+    @GetMapping("/{agentId}")
+    public ClothingItem findById(@PathVariable String clothingItemId) {
+        return clothingItemService.findClothingItemById(clothingItemId);
+    }
+
+
     @PostMapping
-    public void add(ClothingItem clothingItem) {
-        clothingItemService.saveClothingItem(clothingItem);
+    public ResponseEntity<Object> add(ClothingItem clothingItem) {
+        Result<ClothingItem> result = clothingItemService.saveClothingItem(clothingItem);
+
+        if(result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+
+        return ErrorResponse.build(result);
+    }
+
+    @PutMapping("/{clothingItemId}")
+    public ResponseEntity<Object> update(@PathVariable String clothingItemId, @RequestBody ClothingItem clothingItem) {
+        if(!clothingItemId.equalsIgnoreCase(clothingItem.getId())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        Result<ClothingItem> result = clothingItemService.updateClothingItem(clothingItem);
+
+        if(result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ErrorResponse.build(result);
+    }
+
+    @DeleteMapping("/{clothingItemId}")
+    public ResponseEntity<Void> delete(@PathVariable String clothingItemId) {
+        if(clothingItemService.deleteClothingItem(clothingItemId)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }

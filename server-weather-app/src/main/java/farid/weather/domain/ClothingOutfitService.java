@@ -16,11 +16,17 @@ public class ClothingOutfitService {
         this.clothingOutfitRepository = clothingOutfitRepository;
     }
 
-    public void createClothingOutfit(String outfitName, List<String> clothingItemIds) {
-        ClothingOutfit clothingOutfit = new ClothingOutfit();
-        clothingOutfit.setOutfitName(outfitName);
-        clothingOutfit.setClothingItemIds(clothingItemIds);
-        clothingOutfitRepository.save(clothingOutfit);
+    public Result<ClothingOutfit> createClothingOutfit(ClothingOutfit clothingOutfit) {
+        Result<ClothingOutfit> result = validateSave(clothingOutfit);
+
+        if (result.isSuccess()) {
+            clothingOutfitRepository.save(clothingOutfit);
+        } else {
+            result.addMessage("Clothing Outfit not saved", ResultType.INVALID);
+        }
+
+        return result;
+
     }
 
     public List<ClothingOutfit> getAllClothingOutfits() {
@@ -43,8 +49,8 @@ public class ClothingOutfitService {
         clothingOutfitRepository.save(clothingOutfit);
     }
 
-    public Result<Void> validateSave(ClothingOutfit clothingOutfit){
-        Result<Void> result = new Result<>();
+    public Result<ClothingOutfit> validateSave(ClothingOutfit clothingOutfit){
+        Result<ClothingOutfit> result = new Result<>();
 
         if(clothingOutfit.getOutfitName() == null){
             result.addMessage("Outfit Name is required!", ResultType.INVALID);
