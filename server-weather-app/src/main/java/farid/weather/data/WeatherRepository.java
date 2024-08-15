@@ -1,9 +1,9 @@
 package farid.weather.data;
 
-import farid.weather.models.Location;
+import farid.weather.models.Weather;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LocationRepository extends MongoRepository<Location, Integer> {
+public interface WeatherRepository extends MongoRepository<Weather, String> {
 }

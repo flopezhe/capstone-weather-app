@@ -13,7 +13,13 @@ export default function NavBar() {
             <NavLink to="/weather">Weather</NavLink>
           </li>
           <li>
-            <NavLink>Weather Preferences</NavLink>
+            <NavLink to="/weather-preferences">Weather Preferences</NavLink>
+          </li>
+          <li>
+            <NavLink to="/register">Register</NavLink>
+          </li>
+          <li>
+            <NavLink to="/login">Login</NavLink>
           </li>
         </ul>
       </div>
