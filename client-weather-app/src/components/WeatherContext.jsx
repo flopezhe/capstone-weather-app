@@ -8,8 +8,8 @@ export const WeatherProvider = ({ children }) => {
 
   useEffect(() => {
     const params = {
-      latitude: 32.71,
-      longitude: 117.16,
+      latitude: 32,
+      longitude: -117,
       current: ["temperature_2m", "is_day", "rain"],
       temperature_unit: "fahrenheit",
       wind_speed_unit: "mph",
@@ -24,12 +24,11 @@ export const WeatherProvider = ({ children }) => {
         const responses = await fetchWeatherApi(url, params);
         const response = responses[0];
 
-        const utcOffsetSeconds = response.utcOffsetSeconds();
         const current = response.current();
 
         const weatherData = {
           current: {
-            time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
+            time: new Date(Number(current.time()) * 1000),
             temperature2m: current.variables(0).value(),
             isDay: current.variables(1).value(),
             rain: current.variables(2).value(),

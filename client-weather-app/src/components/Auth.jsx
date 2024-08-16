@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "./UserContext";
 
-const Auth = () => {
+function Auth() {
   const [registerUsername, setRegisterUsername] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginUsername, setLoginUsername] = useState("");
@@ -89,6 +89,6 @@ const Auth = () => {
       </div>
     </>
   );
-};
+}
 
 export default Auth;

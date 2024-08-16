@@ -4,7 +4,7 @@ import giphyGif from "./images/rain.gif";
 import sunnyGif from "./images/sunny.gif";
 import nightGif from "./images/night.gif";
 
-const BackgroundChanger = () => {
+function BackgroundChanger() {
   const weatherData = useWeather();
 
   if (!weatherData) {
@@ -16,10 +16,10 @@ const BackgroundChanger = () => {
   const backgroundStyle = {
     backgroundImage:
       rain > 0
-        ? "url(/path-to-rainy-image.jpg)"
+        ? `url(${giphyGif})`
         : isDay
         ? `url(${sunnyGif})`
-        : `url(${giphyGif})`,
+        : `url(${nightGif})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
@@ -32,6 +32,6 @@ const BackgroundChanger = () => {
   };
 
   return <div style={backgroundStyle}></div>;
-};
+}
 
 export default BackgroundChanger;
