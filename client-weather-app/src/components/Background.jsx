@@ -2,6 +2,7 @@ import React from "react";
 import { useWeather } from "./WeatherContext";
 import giphyGif from "./images/rain.gif";
 import sunnyGif from "./images/sunny.gif";
+import nightGif from "./images/night.gif";
 
 const BackgroundChanger = () => {
   const weatherData = useWeather();
