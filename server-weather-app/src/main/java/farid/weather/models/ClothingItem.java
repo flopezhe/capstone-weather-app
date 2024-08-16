@@ -24,4 +24,6 @@ public class ClothingItem {
     private String wearOnRainyDay;
 
     private String wearOnHotDay;
+
+    private String userId;
 }

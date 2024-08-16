@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 
 function ClothingItemForm() {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ function ClothingItemForm() {
     wearOnRainyDay: "",
     wearOnHotDay: "",
   });
+  const { user } = useContext(UserContext);
 
   const handleChange = (e) => {
     setFormData({
@@ -18,12 +20,17 @@ function ClothingItemForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!user) {
+      alert("You must be logged in to add a clothing item.");
+      return;
+    }
+
     fetch("http://localhost:8080/clothing_item", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ ...formData, userId: user.id }), // Include userId
     })
       .then((response) => {
         if (response.ok) {
@@ -44,6 +51,7 @@ function ClothingItemForm() {
         <label>Clothing Type:</label>
         <select
           name="clothingType"
+          className="custom-select"
           value={formData.clothingType}
           onChange={handleChange}
           required
@@ -77,9 +85,10 @@ function ClothingItemForm() {
         />
       </div>
       <div>
-        <label>Wear on Rainy Day:</label>
+        <label>Rain Clothing?:</label>
         <select
           name="wearOnRainyDay"
+          className="custom-select"
           value={formData.wearOnRainyDay}
           onChange={handleChange}
           required
@@ -92,9 +101,10 @@ function ClothingItemForm() {
         </select>
       </div>
       <div>
-        <label>Wear on Hot Day:</label>
+        <label>Hot Day Clothing?:</label>
         <select
           name="wearOnHotDay"
+          className="custom-select"
           value={formData.wearOnHotDay}
           onChange={handleChange}
           required
@@ -106,7 +116,11 @@ function ClothingItemForm() {
           <option value="no">No</option>
         </select>
       </div>
-      <button type="submit">Add Clothing Item</button>
+      <div>
+        <button className="add-clothing-item-button" type="submit">
+          Add Clothing Item
+        </button>
+      </div>
     </form>
   );
 }

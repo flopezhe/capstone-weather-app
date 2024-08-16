@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/clothing_item")
 public class ClothingItemController {
@@ -22,17 +24,37 @@ public class ClothingItemController {
         return clothingItemService.findClothingItemById(clothingItemId);
     }
 
+//    @GetMapping("/by_type")
+//    public List<ClothingItem> getClothingItemsByType(@RequestParam String type) {
+//        return clothingItemService.getClothingItemsByType(type);
+//    }
+
+    @GetMapping("/by_type")
+    public ResponseEntity<List<ClothingItem>> getClothingItemsByType(
+            @RequestParam String type,
+            @RequestParam String userId
+    ) {
+        List<ClothingItem> items = clothingItemService.getClothingItemsForUser(type, userId);
+        return ResponseEntity.ok(items);
+    }
 
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody ClothingItem clothingItem) {
-        Result<ClothingItem> result = clothingItemService.saveClothingItem(clothingItem);
-
-        if(result.isSuccess()) {
-            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
-        }
-
-        return ErrorResponse.build(result);
+    public ResponseEntity<Void> addClothingItem(@RequestBody ClothingItem clothingItem) {
+        clothingItemService.addClothingItem(clothingItem);
+        return ResponseEntity.ok().build();
     }
+
+
+//    @PostMapping
+//    public ResponseEntity<Object> add(@RequestBody ClothingItem clothingItem) {
+//        Result<ClothingItem> result = clothingItemService.saveClothingItem(clothingItem);
+//
+//        if(result.isSuccess()) {
+//            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+//        }
+//
+//        return ErrorResponse.build(result);
+//    }
 
     @PutMapping("/{clothingItemId}")
     public ResponseEntity<Object> update(@PathVariable String clothingItemId, @RequestBody ClothingItem clothingItem) {

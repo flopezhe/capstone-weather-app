@@ -33,4 +33,6 @@ public class Weather {
 
     private String timezone;
 
+    private String userId;
+
 }

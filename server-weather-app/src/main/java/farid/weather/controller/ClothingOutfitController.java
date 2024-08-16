@@ -19,7 +19,7 @@ public class ClothingOutfitController {
     }
 
     @GetMapping("/{outfitId}")
-    public ClothingOutfit getOutfit(String outfitId) {
+    public ClothingOutfit getOutfit(@PathVariable String outfitId) {
         return clothingOutfitService.getClothingOutfitById(outfitId);
     }
 

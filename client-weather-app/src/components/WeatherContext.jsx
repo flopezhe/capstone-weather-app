@@ -8,8 +8,8 @@ export const WeatherProvider = ({ children }) => {
 
   useEffect(() => {
     const params = {
-      latitude: 52.52,
-      longitude: 13.41,
+      latitude: 32.71,
+      longitude: 117.16,
       current: ["temperature_2m", "is_day", "rain"],
       temperature_unit: "fahrenheit",
       wind_speed_unit: "mph",

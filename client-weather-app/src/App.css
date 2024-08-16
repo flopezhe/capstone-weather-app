@@ -3,40 +3,92 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+*{
+  font-family: monospace;
+  color: bisque;
+  font-weight: bold;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.add-clothing-item-button{
+  margin-top: 20px;  
+  font-size: 12px;       
+  border-radius: 3px;    
+  border: 1px solid bisque; 
+  background-color: black; 
+  color: bisque;           
+  cursor: pointer;        
+  text-align: center;     
+  display: inline-block; 
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.custom-select {
+  background-color: black; 
+  color: bisque;            
+  border: 1px solid black; 
+  padding: 10px;          
+  border-radius: 5px;     
+  font-size: 10px;        
+  width: 200px;           
 }
 
-.card {
-  padding: 2em;
+.custom-select option {
+  background-color: black; 
+  color: #fff;            
 }
 
-.read-the-docs {
-  color: #888;
+.custom-select option:hover {
+  background-color: black; 
 }
+
+ul{
+  list-style-type: none;
+  
+}
+
+.nav-to-style{
+  color: bisque;
+  font-weight: bold;
+  border-radius: 3px;    
+  border: 1px solid black; 
+}
+
+nav{
+  
+}
+
+.outfit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Adjust the gap between items as needed */
+}
+
+.top-item {
+  order: 1;
+}
+
+.bottom-item {
+  order: 2;
+}
+
+.shoes-item {
+  order: 3;
+}
+
+.outfit-container img {
+  max-width: 100px; 
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.outfit-container p {
+  text-align: center;
+  margin: 0;
+}
+
+

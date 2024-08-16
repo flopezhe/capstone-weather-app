@@ -20,4 +20,6 @@ public class ClothingOutfit {
     private String outfitName;
 
     private List<String> clothingItemIds;
+
+    private String userId;
 }

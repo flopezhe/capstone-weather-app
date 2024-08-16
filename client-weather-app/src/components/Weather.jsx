@@ -1,57 +1,137 @@
-import React, { useEffect, useState } from "react";
-import { fetchWeatherApi } from "openmeteo";
+import React, { useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 
 export default function Weather() {
   const [weatherData, setWeatherData] = useState(null);
+  const [longitudeData, setLongitudeData] = useState("");
+  const [latitudeData, setLatitudeData] = useState("");
+  const { user } = useContext(UserContext);
 
-  useEffect(() => {
+  const fetchData = async () => {
+    if (
+      !latitudeData ||
+      !longitudeData ||
+      isNaN(latitudeData) ||
+      isNaN(longitudeData)
+    ) {
+      console.error("Invalid latitude or longitude values.");
+      return;
+    }
+
     const params = {
-      latitude: 52.52,
-      longitude: 13.41,
-      current: ["temperature_2m", "is_day", "rain"],
+      latitude: latitudeData,
+      longitude: longitudeData,
+      current_weather: true,
       temperature_unit: "fahrenheit",
       wind_speed_unit: "mph",
       precipitation_unit: "inch",
       timezone: "America/Los_Angeles",
     };
-    const url = "https://api.open-meteo.com/v1/forecast";
 
-    const fetchData = async () => {
-      try {
-        const responses = await fetchWeatherApi(url, params);
-        const response = responses[0];
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${params.latitude}&longitude=${params.longitude}&current_weather=true&temperature_unit=${params.temperature_unit}&wind_speed_unit=${params.wind_speed_unit}&precipitation_unit=${params.precipitation_unit}&timezone=${params.timezone}`;
 
-        const utcOffsetSeconds = response.utcOffsetSeconds();
-        const current = response.current();
-
-        const weatherData = {
-          current: {
-            time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
-            temperature2m: current.variables(0).value(),
-            isDay: current.variables(1).value(),
-            rain: current.variables(2).value(),
-          },
-        };
-
-        setWeatherData(weatherData);
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
       }
-    };
+      const data = await response.json();
 
+      if (!data.current_weather) {
+        throw new Error("Current weather data not found in the response.");
+      }
+
+      const currentWeather = data.current_weather;
+
+      const weatherData = {
+        current: {
+          time: new Date(Number(currentWeather.time) * 1000),
+          temperature2m: currentWeather.temperature,
+          isDay: currentWeather.is_day,
+          rain: currentWeather.precipitation > 0,
+        },
+      };
+
+      setWeatherData(weatherData);
+
+      if (user) {
+        await fetch(`/weather/associate/${user.id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            latitude: latitudeData,
+            longitude: longitudeData,
+            tempAndDayAndRain: [
+              `Time: ${currentWeather.time}`,
+              `Temperature: ${currentWeather.temperature}`,
+              `Is Day: ${currentWeather.is_day}`,
+              `Rain: ${currentWeather.precipitation > 0 ? "Yes" : "No"}`,
+            ],
+            temperature: currentWeather.temperature,
+            tempUnit: "fahrenheit",
+            windSpeedUnit: "mph",
+            precipitationUnit: "inch",
+            timezone: "America/Los_Angeles",
+          }),
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
     fetchData();
-  }, []);
+  };
 
-  if (!weatherData) {
-    return <div>Loading weather data...</div>;
-  }
+  const formatDate = (date) => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+      timeZone: "America/Los_Angeles",
+    };
+    return date.toLocaleDateString(undefined, options);
+  };
 
   return (
-    <div>
-      <p>Time: {weatherData.current.time.toISOString()}</p>
-      <p>Temperature: {Math.ceil(weatherData.current.temperature2m)}°F</p>
-      <p>Daytime: {weatherData.current.isDay ? "Yes" : "No"}</p>
-      <p>Rain: {weatherData.current.rain ? "Yes" : "No"}</p>
-    </div>
+    <>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <label>Longitude: </label>
+          <input
+            type="text"
+            value={longitudeData}
+            onChange={(e) => setLongitudeData(e.target.value)}
+          />
+          <br />
+          <label>Latitude: </label>
+          <input
+            type="text"
+            value={latitudeData}
+            onChange={(e) => setLatitudeData(e.target.value)}
+          />
+          <br />
+          <button className="add-clothing-item-button" type="submit">
+            Enter Location
+          </button>
+        </form>
+      </div>
+
+      {weatherData && (
+        <div>
+          <p>Date: {formatDate(weatherData.current.time)}</p>
+          <p>Temperature: {Math.ceil(weatherData.current.temperature2m)}°F</p>
+          <p>Daytime: {weatherData.current.isDay ? "Yes" : "No"}</p>
+          <p>Rain: {weatherData.current.rain ? "Yes" : "No"}</p>
+        </div>
+      )}
+    </>
   );
 }

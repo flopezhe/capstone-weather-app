@@ -7,16 +7,29 @@ export default function NavBar() {
       <div>
         <ul>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink className="nav-to-style" to="/">
+              Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/weather">Weather</NavLink>
+            <NavLink className="nav-to-style" to="/weather">
+              Weather
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/clothing-fit">Clothing Outfit</NavLink>
+            <NavLink className="nav-to-style" to="/clothing-fit">
+              Clothing Outfit
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/add-clothing-item">Add Clothing Item</NavLink>{" "}
+            <NavLink className="nav-to-style" to="/add-clothing-item">
+              Add Clothing Item
+            </NavLink>{" "}
+          </li>
+          <li>
+            <NavLink className="nav-to-style" to="/user">
+              Account{" "}
+            </NavLink>
           </li>
         </ul>
       </div>
