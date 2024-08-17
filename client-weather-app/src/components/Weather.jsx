@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "./UserContext";
+import { WeatherContext } from "./WeatherContext";
 
 export default function Weather() {
-  const [weatherData, setWeatherData] = useState(null);
   const [longitudeData, setLongitudeData] = useState("");
   const [latitudeData, setLatitudeData] = useState("");
   const { user } = useContext(UserContext);
+  const { weatherData, setWeatherData } = useContext(WeatherContext);
 
   const fetchData = async () => {
     if (
@@ -45,7 +46,7 @@ export default function Weather() {
 
       const weatherData = {
         current: {
-          time: new Date(Number(currentWeather.time) * 1000),
+          time: currentWeather.time,
           temperature2m: currentWeather.temperature,
           isDay: currentWeather.is_day,
           rain: currentWeather.precipitation > 0,
@@ -97,7 +98,7 @@ export default function Weather() {
       hour12: true,
       timeZone: "America/Los_Angeles",
     };
-    return date.toLocaleDateString(undefined, options);
+    return date.toLocaleString(undefined, options);
   };
 
   return (
@@ -123,10 +124,12 @@ export default function Weather() {
           </button>
         </form>
       </div>
-
       {weatherData && (
         <div>
-          <p>Date: {formatDate(weatherData.current.time)}</p>
+          <p>
+            Date:
+            {formatDate(new Date(weatherData.current.time))}
+          </p>
           <p>Temperature: {Math.ceil(weatherData.current.temperature2m)}°F</p>
           <p>Daytime: {weatherData.current.isDay ? "Yes" : "No"}</p>
           <p>Rain: {weatherData.current.rain ? "Yes" : "No"}</p>

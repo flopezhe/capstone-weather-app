@@ -5,7 +5,7 @@ import sunnyGif from "./images/sunny.gif";
 import nightGif from "./images/night.gif";
 
 function BackgroundChanger() {
-  const weatherData = useWeather();
+  const { weatherData } = useWeather();
 
   if (!weatherData) {
     return null;
