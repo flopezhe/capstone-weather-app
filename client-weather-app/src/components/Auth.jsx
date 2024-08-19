@@ -35,9 +35,9 @@ function Auth() {
     const data = await response.json();
     if (response.ok) {
       setUser(data);
-      document.createElement("p", "Login success");
+      alert("LOGIN SUCCESS");
     } else {
-      document.createElement("p", "Login failed");
+      alert("Login failed");
     }
   };
 
