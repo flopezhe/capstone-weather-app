@@ -30,7 +30,7 @@ function ClothingItemForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...formData, userId: user.id }), // Include userId
+      body: JSON.stringify({ ...formData, userId: user.id }),
     })
       .then((response) => {
         if (response.ok) {
@@ -45,83 +45,88 @@ function ClothingItemForm() {
       });
   };
 
+  function addAnother() {}
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Clothing Type:</label>
-        <select
-          name="clothingType"
-          className="custom-select"
-          value={formData.clothingType}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Select Clothing Type
-          </option>
-          <option value="bottoms">Bottoms</option>
-          <option value="first_layer_top">First Layer Top</option>
-          <option value="second_layer_top">Second Layer Top</option>
-          <option value="shoes">Shoes</option>
-        </select>
-      </div>
-      <div>
-        <label>Clothing Name:</label>
-        <input
-          type="text"
-          name="clothingName"
-          value={formData.clothingName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Clothing Image URL:</label>
-        <input
-          type="text"
-          name="clothingImage"
-          value={formData.clothingImage}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Rain Clothing?:</label>
-        <select
-          name="wearOnRainyDay"
-          className="custom-select"
-          value={formData.wearOnRainyDay}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Select Yes or No
-          </option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
-      <div>
-        <label>Hot Day Clothing?:</label>
-        <select
-          name="wearOnHotDay"
-          className="custom-select"
-          value={formData.wearOnHotDay}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Select Yes or No
-          </option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
-      <div>
-        <button className="add-clothing-item-button" type="submit">
-          Add Clothing Item
-        </button>
-      </div>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Clothing Type:</label>
+          <select
+            name="clothingType"
+            className="custom-select"
+            value={formData.clothingType}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Select Clothing Type
+            </option>
+            <option value="bottoms">Bottoms</option>
+            <option value="first_layer_top">First Layer Top</option>
+            <option value="second_layer_top">Second Layer Top</option>
+            <option value="shoes">Shoes</option>
+          </select>
+        </div>
+        <div>
+          <label>Clothing Name:</label>
+          <input
+            type="text"
+            name="clothingName"
+            value={formData.clothingName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Clothing Image URL:</label>
+          <input
+            type="text"
+            name="clothingImage"
+            value={formData.clothingImage}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Rain Clothing?:</label>
+          <select
+            name="wearOnRainyDay"
+            className="custom-select"
+            value={formData.wearOnRainyDay}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Select Yes or No
+            </option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div>
+          <label>Hot Day Clothing?:</label>
+          <select
+            name="wearOnHotDay"
+            className="custom-select"
+            value={formData.wearOnHotDay}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Select Yes or No
+            </option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div>
+          <button className="add-clothing-item-button" type="submit">
+            Add Clothing Item
+          </button>
+        </div>
+      </form>
+      <button> Add another Item?</button>
+    </>
   );
 }
 
