@@ -14,10 +14,9 @@ function Outfit() {
       if (!user) return;
 
       setLoading(true);
-      setError(null); // Clear previous errors
+      setError(null);
 
       try {
-        // Fetch bottoms
         const bottomsResponse = await fetch(
           `http://localhost:8080/clothing_item/by_type?type=bottoms&userId=${user.id}`
         );
@@ -26,7 +25,6 @@ function Outfit() {
           setBottoms(bottomsData[0]);
         }
 
-        // Fetch top (first layer or second layer)
         const firstLayerTopResponse = await fetch(
           `http://localhost:8080/clothing_item/by_type?type=first_layer_top&userId=${user.id}`
         );
@@ -43,7 +41,6 @@ function Outfit() {
           }
         }
 
-        // Fetch shoes
         const shoesResponse = await fetch(
           `http://localhost:8080/clothing_item/by_type?type=shoes&userId=${user.id}`
         );
@@ -82,6 +79,7 @@ function Outfit() {
           <>
             <img src={top.clothingImage} alt={top.clothingName} />
             <p>{top.clothingName}</p>
+            <button> Delete</button>
           </>
         ) : (
           <p>No top available</p>
@@ -93,6 +91,7 @@ function Outfit() {
           <>
             <img src={bottoms.clothingImage} alt={bottoms.clothingName} />
             <p>{bottoms.clothingName}</p>
+            <button> Delete</button>
           </>
         ) : (
           <p>No bottoms available</p>
@@ -104,6 +103,7 @@ function Outfit() {
           <>
             <img src={shoes.clothingImage} alt={shoes.clothingName} />
             <p>{shoes.clothingName}</p>
+            <button> Delete</button>
           </>
         ) : (
           <p>No shoes available</p>
