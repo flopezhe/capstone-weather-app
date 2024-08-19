@@ -7,6 +7,8 @@ export default function Weather() {
   const [latitudeData, setLatitudeData] = useState("");
   const { user } = useContext(UserContext);
   const { weatherData, setWeatherData } = useContext(WeatherContext);
+  const [errorsMsg, setErrorsMsg] = useState("");
+  const [successMsg, setSuccessMessage] = useState("");
 
   const fetchData = async () => {
     if (
@@ -34,12 +36,12 @@ export default function Weather() {
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+        setErrorsMsg(`API request failed with status ${response.status}`);
       }
       const data = await response.json();
 
       if (!data.current_weather) {
-        throw new Error("Current weather data not found in the response.");
+        setErrorsMsg("Please put a valid latitude or longitude.");
       }
 
       const currentWeather = data.current_weather;
@@ -88,6 +90,22 @@ export default function Weather() {
     fetchData();
   };
 
+  // function handleSaveWeather() {
+  //   fetch(`http://localhost:8080/weather`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(latitudeData, longitudeData, user.id),
+  //   }).then((response) => {
+  //     if (response.ok) {
+  //       setSuccessMessage("Added successfully!");
+  //     } else {
+  //       setErrorsMsg("Error Submitting Form");
+  //     }
+  //   });
+  // }
+
   const formatDate = (date) => {
     const options = {
       year: "numeric",
@@ -103,6 +121,7 @@ export default function Weather() {
 
   return (
     <>
+      <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
       <div>
         <form onSubmit={handleSubmit}>
           <label>Longitude: </label>
@@ -119,21 +138,29 @@ export default function Weather() {
             onChange={(e) => setLatitudeData(e.target.value)}
           />
           <br />
-          <button className="add-clothing-item-button" type="submit">
+          <button
+            className="add-clothing-item-button weder-title"
+            type="submit"
+          >
             Enter Location
           </button>
         </form>
       </div>
       {weatherData && (
-        <div>
-          <p>
-            Date:
-            {formatDate(new Date(weatherData.current.time))}
-          </p>
-          <p>Temperature: {Math.ceil(weatherData.current.temperature2m)}°F</p>
-          <p>Daytime: {weatherData.current.isDay ? "Yes" : "No"}</p>
-          <p>Rain: {weatherData.current.rain ? "Yes" : "No"}</p>
-        </div>
+        <>
+          <div className="weder-title">
+            <p>
+              Date:
+              {formatDate(new Date(weatherData.current.time))}
+            </p>
+            <p>Temperature: {Math.ceil(weatherData.current.temperature2m)}°F</p>
+            <p>Daytime: {weatherData.current.isDay ? "Yes" : "No"}</p>
+            <p>Rain: {weatherData.current.rain ? "Yes" : "No"}</p>
+          </div>
+          <div className="weder-title">
+            <button> Save Weather</button>
+          </div>
+        </>
       )}
     </>
   );

@@ -54,44 +54,49 @@ function Auth() {
 
   return (
     <>
-      <div>{successMsg ? <div>{successMsg}</div> : <div>{errorsMsg}</div>}</div>
+      <div>{successMsg ? <div>{successMsg}</div> : <div></div>}</div>
+      <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
       <div>
         {user ? (
           <>
-            <h2>Welcome {user.userName}</h2>
-            <button onClick={handleLogout}>Logout</button>
+            <h2 className="weder-title">Welcome {user.userName}</h2>
+            <button className="weder-title" onClick={handleLogout}>
+              Logout
+            </button>
           </>
         ) : (
           <>
-            <h2>Register</h2>
-            <input
-              type="text"
-              placeholder="Username"
-              value={registerUsername}
-              onChange={(e) => setRegisterUsername(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={registerPassword}
-              onChange={(e) => setRegisterPassword(e.target.value)}
-            />
-            <button onClick={handleRegister}>Register</button>
+            <div className="weder-title">
+              <h2>Register</h2>
+              <input
+                type="text"
+                placeholder="Username"
+                value={registerUsername}
+                onChange={(e) => setRegisterUsername(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={registerPassword}
+                onChange={(e) => setRegisterPassword(e.target.value)}
+              />
+              <button onClick={handleRegister}>Register</button>
 
-            <h2>Login</h2>
-            <input
-              type="text"
-              placeholder="Username"
-              value={loginUsername}
-              onChange={(e) => setLoginUsername(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>Login</button>
+              <h2>Login</h2>
+              <input
+                type="text"
+                placeholder="Username"
+                value={loginUsername}
+                onChange={(e) => setLoginUsername(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+              />
+              <button onClick={handleLogin}>Login</button>
+            </div>
           </>
         )}
       </div>

@@ -23,7 +23,7 @@ function ClothingItemForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!user) {
-      alert("You must be logged in to add a clothing item.");
+      setErrorsMsg("You must be logged in to add a clothing item.");
       return;
     }
 
@@ -50,7 +50,7 @@ function ClothingItemForm() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("An error occurred while adding the clothing item.");
+        setErrorsMsg("An error occurred while adding the clothing item.");
       });
   };
 
@@ -58,8 +58,13 @@ function ClothingItemForm() {
 
   return (
     <>
-      {successMessage ? <div>{successMessage}</div> : <div>Item Form</div>}
-      <form onSubmit={handleSubmit}>
+      {successMessage ? (
+        <div>{successMessage}</div>
+      ) : (
+        <div className="weder-title">Item Form</div>
+      )}
+      {errorsMsg ? <div>{errorsMsg}</div> : <div></div>}
+      <form onSubmit={handleSubmit} className="weder-title">
         <div>
           <label>Clothing Type:</label>
           <select

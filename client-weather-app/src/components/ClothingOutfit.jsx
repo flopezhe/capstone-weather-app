@@ -11,6 +11,44 @@ function Outfit() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
+  async function getNewTop() {
+    const firstLayerTopResponse = await fetch(
+      `http://localhost:8080/clothing_item/by_type?type=first_layer_top&userId=${user.id}`
+    );
+    const firstLayerTopData = await firstLayerTopResponse.json();
+    if (firstLayerTopData.length > 0) {
+      setTop(firstLayerTopData[0]);
+    } else {
+      const secondLayerTopResponse = await fetch(
+        `http://localhost:8080/clothing_item/by_type?type=second_layer_top&userId=${user.id}`
+      );
+      const secondLayerTopData = await secondLayerTopResponse.json();
+      if (secondLayerTopData.length > 0) {
+        setTop(secondLayerTopData[0]);
+      }
+    }
+  }
+
+  async function getNewBottoms() {
+    const bottomsResponse = await fetch(
+      `http://localhost:8080/clothing_item/by_type?type=bottoms&userId=${user.id}`
+    );
+    const bottomsData = await bottomsResponse.json();
+    if (bottomsData.length > 0) {
+      setBottoms(bottomsData[0]);
+    }
+  }
+
+  async function getNewShoes() {
+    const shoesResponse = await fetch(
+      `http://localhost:8080/clothing_item/by_type?type=shoes&userId=${user.id}`
+    );
+    const shoesData = await shoesResponse.json();
+    if (shoesData.length > 0) {
+      setShoes(shoesData[0]);
+    }
+  }
+
   useEffect(() => {
     const fetchItems = async () => {
       if (!user) return;
@@ -61,14 +99,6 @@ function Outfit() {
     fetchItems();
   }, [user]);
 
-  // useEffect(() => {}, []);
-  // useEffect(() => {}, []);
-  // useEffect(() => {}, []);
-
-  // console.log(top.id);
-  // console.log(bottoms.id);
-  // console.log(shoes.id);
-
   function handleTopDelete() {
     fetch(`http://localhost:8080/clothing_item/${top.id}`, {
       method: "DELETE",
@@ -88,7 +118,7 @@ function Outfit() {
   }
 
   if (!user) {
-    return <p>Please log in to see your outfit.</p>;
+    return <p className="weder-title">Please log in to see your outfit.</p>;
   }
 
   if (loading) {
@@ -111,7 +141,10 @@ function Outfit() {
               <button onClick={handleTopDelete}> Delete</button>
             </>
           ) : (
-            <p>No top available</p>
+            <>
+              <p>No top</p>
+              <button onClick={getNewTop}> Get New Top</button>
+            </>
           )}
         </div>
         <div className="bottom-item">
@@ -123,7 +156,10 @@ function Outfit() {
               <button onClick={handleBottomsDelete}> Delete</button>
             </>
           ) : (
-            <p>No bottoms available</p>
+            <>
+              <p>No Bottoms</p>
+              <button onClick={getNewBottoms}> Get New Bottoms</button>
+            </>
           )}
         </div>
         <div className="shoes-item">
@@ -135,7 +171,10 @@ function Outfit() {
               <button onClick={handleShoesDelete}> Delete</button>
             </>
           ) : (
-            <p>No shoes available</p>
+            <>
+              <p>No Shoes</p>
+              <button onClick={getNewShoes}> Get New Shoes</button>
+            </>
           )}
         </div>
       </div>

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Document(collection = "weather")
 @Data
 @AllArgsConstructor
@@ -21,17 +19,17 @@ public class Weather {
 
     private double longitude;
 
-    private List<String> tempAndDayAndRain;
+//    private List<String> tempAndDayAndRain;
+//
+//    private boolean temperature;
 
-    private int temperature;
-
-    private String tempUnit;
-
-    private String windSpeedUnit;
-
-    private String precipitationUnit;
-
-    private String timezone;
+//    private String tempUnit;
+//
+//    private String windSpeedUnit;
+//
+//    private String precipitationUnit;
+//
+//    private String timezone;
 
     private String userId;
 
