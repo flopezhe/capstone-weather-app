@@ -10,6 +10,8 @@ function ClothingItemForm() {
     wearOnHotDay: "",
   });
   const { user } = useContext(UserContext);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorsMsg, setErrorsMsg] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -34,9 +36,16 @@ function ClothingItemForm() {
     })
       .then((response) => {
         if (response.ok) {
-          alert("Clothing item added successfully!");
+          setSuccessMessage("Added successfully!");
+          setFormData({
+            clothingType: "",
+            clothingName: "",
+            clothingImage: "",
+            wearOnRainyDay: "",
+            wearOnHotDay: "",
+          });
         } else {
-          alert("Failed to add clothing item.");
+          setErrorsMsg("Error Submitting Form");
         }
       })
       .catch((error) => {
@@ -49,6 +58,7 @@ function ClothingItemForm() {
 
   return (
     <>
+      {successMessage ? <div>{successMessage}</div> : <div>Item Form</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Clothing Type:</label>
@@ -125,7 +135,6 @@ function ClothingItemForm() {
           </button>
         </div>
       </form>
-      <button> Add another Item?</button>
     </>
   );
 }
