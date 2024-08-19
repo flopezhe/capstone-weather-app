@@ -7,9 +7,11 @@ function Auth() {
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
+  const [errorsMsg, setErrorsMsg] = useState("");
+  const [successMsg, setSuccessMessage] = useState("");
 
   const handleRegister = async () => {
-    await fetch("http://localhost:8080/app_user/register", {
+    const response = await fetch("http://localhost:8080/app_user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,6 +21,11 @@ function Auth() {
         password: registerPassword,
       }),
     });
+    if (response.ok) {
+      setSuccessMessage("Registered SuccessFully!");
+    } else {
+      setErrorsMsg("Failed to Register!");
+    }
   };
 
   const handleLogin = async () => {
@@ -35,9 +42,9 @@ function Auth() {
     const data = await response.json();
     if (response.ok) {
       setUser(data);
-      alert("LOGIN SUCCESS");
+      setSuccessMessage("Login success!");
     } else {
-      alert("Login failed");
+      setErrorsMsg("Login failed!");
     }
   };
 
@@ -47,6 +54,7 @@ function Auth() {
 
   return (
     <>
+      <div>{successMsg ? <div>{successMsg}</div> : <div>{errorsMsg}</div>}</div>
       <div>
         {user ? (
           <>
