@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function Outfit() {
   const [bottoms, setBottoms] = useState(null);
@@ -8,6 +9,7 @@ function Outfit() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -59,6 +61,32 @@ function Outfit() {
     fetchItems();
   }, [user]);
 
+  // useEffect(() => {}, []);
+  // useEffect(() => {}, []);
+  // useEffect(() => {}, []);
+
+  // console.log(top.id);
+  // console.log(bottoms.id);
+  // console.log(shoes.id);
+
+  function handleTopDelete() {
+    fetch(`http://localhost:8080/clothing_item/${top.id}`, {
+      method: "DELETE",
+    }).then(setTop());
+  }
+
+  function handleBottomsDelete() {
+    fetch(`http://localhost:8080/clothing_item/${bottoms.id}`, {
+      method: "DELETE",
+    }).then(setBottoms());
+  }
+
+  function handleShoesDelete() {
+    fetch(`http://localhost:8080/clothing_item/${shoes.id}`, {
+      method: "DELETE",
+    }).then(setShoes());
+  }
+
   if (!user) {
     return <p>Please log in to see your outfit.</p>;
   }
@@ -72,44 +100,47 @@ function Outfit() {
   }
 
   return (
-    <div className="outfit-container">
-      <div className="top-item">
-        <h3>Top</h3>
-        {top ? (
-          <>
-            <img src={top.clothingImage} alt={top.clothingName} />
-            <p>{top.clothingName}</p>
-            <button> Delete</button>
-          </>
-        ) : (
-          <p>No top available</p>
-        )}
+    <>
+      <div className="outfit-container">
+        <div className="top-item">
+          <h3>Top</h3>
+          {top ? (
+            <>
+              <img src={top.clothingImage} alt={top.clothingName} />
+              <p>{top.clothingName}</p>
+              <button onClick={handleTopDelete}> Delete</button>
+            </>
+          ) : (
+            <p>No top available</p>
+          )}
+        </div>
+        <div className="bottom-item">
+          <h3>Bottoms</h3>
+          {bottoms ? (
+            <>
+              <img src={bottoms.clothingImage} alt={bottoms.clothingName} />
+              <p>{bottoms.clothingName}</p>
+              <button onClick={handleBottomsDelete}> Delete</button>
+            </>
+          ) : (
+            <p>No bottoms available</p>
+          )}
+        </div>
+        <div className="shoes-item">
+          <h3>Shoes</h3>
+          {shoes ? (
+            <>
+              <img src={shoes.clothingImage} alt={shoes.clothingName} />
+              <p>{shoes.clothingName}</p>
+              <button onClick={handleShoesDelete}> Delete</button>
+            </>
+          ) : (
+            <p>No shoes available</p>
+          )}
+        </div>
       </div>
-      <div className="bottom-item">
-        <h3>Bottoms</h3>
-        {bottoms ? (
-          <>
-            <img src={bottoms.clothingImage} alt={bottoms.clothingName} />
-            <p>{bottoms.clothingName}</p>
-            <button> Delete</button>
-          </>
-        ) : (
-          <p>No bottoms available</p>
-        )}
-      </div>
-      <div className="shoes-item">
-        <h3>Shoes</h3>
-        {shoes ? (
-          <>
-            <img src={shoes.clothingImage} alt={shoes.clothingName} />
-            <p>{shoes.clothingName}</p>
-            <button> Delete</button>
-          </>
-        ) : (
-          <p>No shoes available</p>
-        )}
-      </div>
-    </div>
+      <div>{/* <button onClick={}> Refresh Fit?</button> */}</div>
+    </>
   );
 }
 
