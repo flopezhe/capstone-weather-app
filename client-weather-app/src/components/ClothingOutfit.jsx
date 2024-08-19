@@ -11,26 +11,6 @@ function Outfit() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  async function getAnotherTop() {
-    const firstLayerTopResponse = await fetch(
-      `http://localhost:8080/clothing_item/by_type?type=first_layer_top&userId=${user.id}`
-    );
-    const firstLayerTopData = await firstLayerTopResponse.json();
-    if (firstLayerTopData.length > 0) {
-      setTop(firstLayerTopData[0]);
-    } else {
-      const secondLayerTopResponse = await fetch(
-        `http://localhost:8080/clothing_item/by_type?type=second_layer_top&userId=${user.id}`
-      );
-      const secondLayerTopData = await secondLayerTopResponse.json();
-      if (secondLayerTopData.length > 0) {
-        setTop(secondLayerTopData[0]);
-      } else {
-        setTop();
-      }
-    }
-  }
-
   useEffect(() => {
     const fetchItems = async () => {
       if (!user) return;
@@ -128,28 +108,10 @@ function Outfit() {
             <>
               <img src={top.clothingImage} alt={top.clothingName} />
               <p>{top.clothingName}</p>
-
-              <div>
-                <button
-                  className="add-clothing-item-button"
-                  onClick={handleTopDelete}
-                >
-                  Delete
-                </button>
-              </div>
+              <button onClick={handleTopDelete}> Delete</button>
             </>
           ) : (
-            <>
-              <p>No top</p>
-              <div>
-                <button
-                  className="add-clothing-item-button"
-                  onClick={getAnotherTop}
-                >
-                  Get Another Top Item?
-                </button>
-              </div>
-            </>
+            <p>No top available</p>
           )}
         </div>
         <div className="bottom-item">
@@ -161,7 +123,7 @@ function Outfit() {
               <button onClick={handleBottomsDelete}> Delete</button>
             </>
           ) : (
-            <p>No bottoms</p>
+            <p>No bottoms available</p>
           )}
         </div>
         <div className="shoes-item">
@@ -173,7 +135,7 @@ function Outfit() {
               <button onClick={handleShoesDelete}> Delete</button>
             </>
           ) : (
-            <p>No shoes</p>
+            <p>No shoes available</p>
           )}
         </div>
       </div>
