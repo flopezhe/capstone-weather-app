@@ -18,9 +18,9 @@ public class ClothingItemService {
         return clothingItemRepository.findById(id).orElse(null);
     }
 
-    public List<ClothingItem> getClothingItemsByType(String type) {
-        return clothingItemRepository.findByClothingType(type);
-    }
+//    public List<ClothingItem> getClothingItemsByType(String type) {
+//        return clothingItemRepository.findByClothingType(type);
+//    }
 
     public List<ClothingItem> getClothingItemsForUser(String type, String userId) {
         return clothingItemRepository.findByClothingTypeAndUserId(type, userId);

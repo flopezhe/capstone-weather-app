@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "./UserContext";
 import { WeatherContext } from "./WeatherContext";
 
@@ -8,7 +8,36 @@ export default function Weather() {
   const { user } = useContext(UserContext);
   const { weatherData, setWeatherData } = useContext(WeatherContext);
   const [errorsMsg, setErrorsMsg] = useState("");
+  const [dataErrorsMsg, setDataErrorsMsg] = useState("");
   const [successMsg, setSuccessMessage] = useState("");
+  const [weathers, setWeathersData] = useState([]);
+
+  useEffect(() => {
+    async function fetchWeatherData() {
+      if (!user) {
+        setDataErrorsMsg("User not logged in");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `http://localhost:8080/weather/user/${user.id}`
+        );
+        if (!response.ok) {
+          setDataErrorsMsg(`Couldnt get the data, error with request!`);
+          return;
+        }
+
+        const data = await response.json();
+
+        setWeathersData(data);
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+        setDataErrorsMsg("Error fetching weather data.");
+      }
+    }
+    fetchWeatherData();
+  }, [user, weathers]);
 
   const fetchData = async () => {
     if (
@@ -56,30 +85,6 @@ export default function Weather() {
       };
 
       setWeatherData(weatherData);
-
-      if (user) {
-        await fetch(`/weather/associate/${user.id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            latitude: latitudeData,
-            longitude: longitudeData,
-            tempAndDayAndRain: [
-              `Time: ${currentWeather.time}`,
-              `Temperature: ${currentWeather.temperature}`,
-              `Is Day: ${currentWeather.is_day}`,
-              `Rain: ${currentWeather.precipitation > 0 ? "Yes" : "No"}`,
-            ],
-            temperature: currentWeather.temperature,
-            tempUnit: "fahrenheit",
-            windSpeedUnit: "mph",
-            precipitationUnit: "inch",
-            timezone: "America/Los_Angeles",
-          }),
-        });
-      }
     } catch (error) {
       console.error("Error fetching weather data:", error);
     }
@@ -90,21 +95,37 @@ export default function Weather() {
     fetchData();
   };
 
-  // function handleSaveWeather() {
-  //   fetch(`http://localhost:8080/weather`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(latitudeData, longitudeData, user.id),
-  //   }).then((response) => {
-  //     if (response.ok) {
-  //       setSuccessMessage("Added successfully!");
-  //     } else {
-  //       setErrorsMsg("Error Submitting Form");
-  //     }
-  //   });
-  // }
+  function handleSaveWeather(event) {
+    event.preventDefault();
+    if (!user) {
+      setErrorsMsg("Need to be logged in to save weather!");
+      return;
+    }
+    console.log(latitudeData);
+    console.log(longitudeData);
+    console.log(user.id);
+    const lat = parseFloat(latitudeData);
+    console.log(lat);
+
+    fetch(`http://localhost:8080/weather`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        latitude: parseFloat(latitudeData),
+        longitude: parseFloat(longitudeData),
+        userId: user.id,
+      }),
+    }).then((response) => {
+      if (response.ok) {
+        setSuccessMessage("Added successfully!");
+      } else {
+        setErrorsMsg("Error Submitting Form");
+      }
+    });
+  }
 
   const formatDate = (date) => {
     const options = {
@@ -119,8 +140,19 @@ export default function Weather() {
     return date.toLocaleString(undefined, options);
   };
 
+  function handleDelete(weatherId) {
+    fetch(`http://localhost:8080/weather/${weatherId}`, {
+      method: "DELETE",
+    });
+  }
+
   return (
     <>
+      {successMsg ? (
+        <div>{successMsg}</div>
+      ) : (
+        <div className="weder-title">Item Form</div>
+      )}
       <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
       <div>
         <form onSubmit={handleSubmit}>
@@ -157,11 +189,38 @@ export default function Weather() {
             <p>Daytime: {weatherData.current.isDay ? "Yes" : "No"}</p>
             <p>Rain: {weatherData.current.rain ? "Yes" : "No"}</p>
           </div>
-          <div className="weder-title">
-            <button> Save Weather</button>
-          </div>
         </>
       )}
+      <div className="weder-title">
+        <button
+          className="add-clothing-item-button"
+          onClick={handleSaveWeather}
+          type="button"
+        >
+          Save Weather
+        </button>
+      </div>
+      <div>
+        <h3>Weather Data</h3>
+        {dataErrorsMsg && <div>{dataErrorsMsg}</div>}
+        {weathers.length > 0 ? (
+          weathers.map((weather) => (
+            <div key={weather.weatherId}>
+              <p>Latitude: {weather.latitude}</p>
+              <p>Longitude: {weather.longitude}</p>
+              <button
+                className="add-clothing-item-button"
+                onClick={() => handleDelete(weather.weatherId)}
+                type="button"
+              >
+                Delete
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>No data</p>
+        )}
+      </div>
     </>
   );
 }

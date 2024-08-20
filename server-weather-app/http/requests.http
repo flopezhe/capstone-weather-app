@@ -1,15 +1,5 @@
 @url = http://localhost:8080
 
-GET http://localhost:8080/clothing_item/by_type?type=bottoms
-
-###
-
-GET http://localhost:8080/clothing_item/bottoms/66bebe26920f2f76cb568be0
-
-###
-
-GET http://localhost:8080/clothing_item/by_type?type=shoes
-
 ###
 
 POST {{url}}/clothing_item HTTP/1.1
@@ -29,3 +19,19 @@ Accept: application/json
 DELETE {{url}}/api/locations/1 HTTP/1.1
 Content-Type: application/json
 Accept: application/json
+
+###
+
+POST {{url}}/weather HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "latitude":"32",
+    "longitude":"-117",
+    "userId":"123"
+}
+
+###
+
+GET @{{url}}/weather/66c3fdd7a8927f290ea3fda9 HTTP/1.1
