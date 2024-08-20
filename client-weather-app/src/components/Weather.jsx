@@ -47,6 +47,7 @@ export default function Weather() {
       isNaN(longitudeData)
     ) {
       console.error("Invalid latitude or longitude values.");
+      setErrorsMsg("Please enter a valid number for latitude and longitude!");
       return;
     }
 
@@ -101,11 +102,6 @@ export default function Weather() {
       setErrorsMsg("Need to be logged in to save weather!");
       return;
     }
-    console.log(latitudeData);
-    console.log(longitudeData);
-    console.log(user.id);
-    const lat = parseFloat(latitudeData);
-    console.log(lat);
 
     fetch(`http://localhost:8080/weather`, {
       method: "POST",
