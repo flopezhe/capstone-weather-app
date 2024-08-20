@@ -4,7 +4,7 @@ import { UserContext } from "./UserContext";
 
 export const WeatherContext = createContext();
 
-export const WeatherProvider = ({ children }) => {
+export function WeatherProvider({ children }) {
   const [weatherData, setWeatherData] = useState(null);
 
   const { user } = useContext(UserContext);
@@ -23,7 +23,7 @@ export const WeatherProvider = ({ children }) => {
       };
       const url = "https://api.open-meteo.com/v1/forecast";
 
-      const fetchData = async () => {
+      async function fetchData() {
         try {
           const responses = await fetchWeatherApi(url, params);
           const response = responses[0];
@@ -43,7 +43,7 @@ export const WeatherProvider = ({ children }) => {
         } catch (error) {
           console.error("Error fetching weather data:", error);
         }
-      };
+      }
 
       fetchData();
     }
@@ -54,6 +54,6 @@ export const WeatherProvider = ({ children }) => {
       {children}
     </WeatherContext.Provider>
   );
-};
+}
 
 export const useWeather = () => useContext(WeatherContext);

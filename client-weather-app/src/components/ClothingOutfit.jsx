@@ -9,7 +9,6 @@ function Outfit() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
 
   async function getNewTop() {
     const firstLayerTopResponse = await fetch(
@@ -50,7 +49,7 @@ function Outfit() {
   }
 
   useEffect(() => {
-    const fetchItems = async () => {
+    async function fetchItems() {
       if (!user) return;
 
       setLoading(true);
@@ -94,7 +93,7 @@ function Outfit() {
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchItems();
   }, [user]);

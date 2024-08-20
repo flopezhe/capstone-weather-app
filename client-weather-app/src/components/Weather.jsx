@@ -39,7 +39,7 @@ export default function Weather() {
     fetchWeatherData();
   }, [user, weathers]);
 
-  const fetchData = async () => {
+  async function fetchData() {
     if (
       !latitudeData ||
       !longitudeData ||
@@ -88,12 +88,12 @@ export default function Weather() {
     } catch (error) {
       console.error("Error fetching weather data:", error);
     }
-  };
+  }
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
     fetchData();
-  };
+  }
 
   function handleSaveWeather(event) {
     event.preventDefault();
@@ -127,7 +127,7 @@ export default function Weather() {
     });
   }
 
-  const formatDate = (date) => {
+  function formatDate(date) {
     const options = {
       year: "numeric",
       month: "long",
@@ -138,7 +138,7 @@ export default function Weather() {
       timeZone: "America/Los_Angeles",
     };
     return date.toLocaleString(undefined, options);
-  };
+  }
 
   function handleDelete(weatherId) {
     fetch(`http://localhost:8080/weather/${weatherId}`, {
@@ -151,9 +151,9 @@ export default function Weather() {
       {successMsg ? (
         <div>{successMsg}</div>
       ) : (
-        <div className="weder-title">Item Form</div>
+        <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
       )}
-      <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
+      <div className="weder-title">Item Form</div>
       <div>
         <form onSubmit={handleSubmit}>
           <label>Longitude: </label>
