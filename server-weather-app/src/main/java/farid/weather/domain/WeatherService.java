@@ -14,8 +14,8 @@ public class WeatherService {
         this.weatherRepository = weatherRepository;
     }
 
-    public Weather getWeather(String id) {
-        return weatherRepository.findById(id).orElse(null);
+    public List<Weather> getWeather(String id) {
+        return weatherRepository.findByUserId(id);
     }
 
     public Result<Weather> saveWeather(Weather weather) {

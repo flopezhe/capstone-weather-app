@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/weather")
 public class WeatherController {
@@ -16,14 +18,15 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @GetMapping("/{weatherId}")
-    public Weather getWeather(String weatherId) {
-        return weatherService.getWeather(weatherId);
+    @GetMapping("/user/{userId}")
+    public List<Weather> getWeather(@PathVariable String userId) {
+        return weatherService.getWeather(userId);
     }
 
 
     @PostMapping
-    public ResponseEntity<Object> add(Weather weather) {
+    public ResponseEntity<Object> add(@RequestBody Weather weather) {
+        System.out.println(weather);
         Result<Weather> result = weatherService.saveWeather(weather);
 
         if(result.isSuccess()) {

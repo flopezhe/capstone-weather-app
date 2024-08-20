@@ -19,18 +19,8 @@ public class Weather {
 
     private double longitude;
 
-//    private List<String> tempAndDayAndRain;
-//
-//    private boolean temperature;
-
-//    private String tempUnit;
-//
-//    private String windSpeedUnit;
-//
-//    private String precipitationUnit;
-//
-//    private String timezone;
-
     private String userId;
+
+
 
 }
