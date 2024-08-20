@@ -11,6 +11,10 @@
   color: bisque;
   font-weight: bold;
 }
+/* 
+img{
+  opacity: 0.5;
+} */
 
 .weder-title{
   margin-left: 45px;
@@ -57,12 +61,9 @@ ul{
   color: bisque;
   font-weight: bold;
   border-radius: 3px;    
-  border: 1px solid black; 
-}
-
-nav{
   
 }
+
 
 .outfit-container {
   display: flex;

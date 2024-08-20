@@ -10,7 +10,7 @@ function Auth() {
   const [errorsMsg, setErrorsMsg] = useState("");
   const [successMsg, setSuccessMessage] = useState("");
 
-  const handleRegister = async () => {
+  async function handleRegister() {
     const response = await fetch("http://localhost:8080/app_user/register", {
       method: "POST",
       headers: {
@@ -26,9 +26,9 @@ function Auth() {
     } else {
       setErrorsMsg("Failed to Register!");
     }
-  };
+  }
 
-  const handleLogin = async () => {
+  async function handleLogin() {
     const response = await fetch("http://localhost:8080/app_user/login", {
       method: "POST",
       headers: {
@@ -46,16 +46,22 @@ function Auth() {
     } else {
       setErrorsMsg("Login failed!");
     }
-  };
+  }
 
-  const handleLogout = () => {
+  function handleLogout() {
     setUser(null);
-  };
+  }
 
   return (
     <>
-      <div>{successMsg ? <div>{successMsg}</div> : <div></div>}</div>
-      <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
+      <div>
+        {successMsg ? (
+          <div>{successMsg}</div>
+        ) : (
+          <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
+        )}
+      </div>
+
       <div>
         {user ? (
           <>

@@ -13,14 +13,14 @@ function ClothingItemForm() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorsMsg, setErrorsMsg] = useState("");
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-  };
+  }
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
     if (!user) {
       setErrorsMsg("You must be logged in to add a clothing item.");
@@ -52,9 +52,7 @@ function ClothingItemForm() {
         console.error("Error:", error);
         setErrorsMsg("An error occurred while adding the clothing item.");
       });
-  };
-
-  function addAnother() {}
+  }
 
   return (
     <>
