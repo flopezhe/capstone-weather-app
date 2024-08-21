@@ -10,7 +10,7 @@ function ClothingItemForm() {
     wearOnHotDay: "",
   });
   const { user } = useContext(UserContext);
-  const [successMessage, setSuccessMessage] = useState("");
+
   const [errorsMsg, setErrorsMsg] = useState("");
 
   function handleChange(e) {
@@ -36,7 +36,7 @@ function ClothingItemForm() {
     })
       .then((response) => {
         if (response.ok) {
-          setSuccessMessage("Added successfully!");
+          setErrorsMsg("Added successfully!");
           setFormData({
             clothingType: "",
             clothingName: "",
@@ -56,12 +56,7 @@ function ClothingItemForm() {
 
   return (
     <>
-      {successMessage ? (
-        <div>{successMessage}</div>
-      ) : (
-        <div className="weder-title">Item Form</div>
-      )}
-      {errorsMsg ? <div>{errorsMsg}</div> : <div></div>}
+      {errorsMsg ? <div>{errorsMsg}</div> : <div> Item Form</div>}
       <form onSubmit={handleSubmit} className="weder-title">
         <div>
           <label>Clothing Type:</label>
