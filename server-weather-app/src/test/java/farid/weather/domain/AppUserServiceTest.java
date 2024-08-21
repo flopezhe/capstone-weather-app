@@ -2,10 +2,14 @@ package farid.weather.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static org.junit.jupiter.api.Assertions.*;
 
+@MockBean
 class AppUserServiceTest {
+
+    
+
 
     @BeforeEach
     void setUp() {

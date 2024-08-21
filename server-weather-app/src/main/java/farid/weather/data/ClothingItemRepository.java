@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ClothingItemRepository extends MongoRepository<ClothingItem, String> {
-    List<ClothingItem> findByClothingType(String clothingType);
+//    List<ClothingItem> findByClothingType(String clothingType);
 
     List<ClothingItem> findByClothingTypeAndUserId(String clothingType, String userId);
 }
