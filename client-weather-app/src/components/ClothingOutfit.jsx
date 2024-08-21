@@ -21,9 +21,16 @@ function Outfit() {
       const secondLayerTopResponse = await fetch(
         `http://localhost:8080/clothing_item/by_type?type=second_layer_top&userId=${user.id}`
       );
+      if (!secondLayerTopResponse.ok) {
+        setError("No more tops!");
+      }
       const secondLayerTopData = await secondLayerTopResponse.json();
       if (secondLayerTopData.length > 0) {
         setTop(secondLayerTopData[0]);
+      }
+
+      if (!secondLayerTopData.ok) {
+        setError("No more tops!");
       }
     }
   }
@@ -32,9 +39,15 @@ function Outfit() {
     const bottomsResponse = await fetch(
       `http://localhost:8080/clothing_item/by_type?type=bottoms&userId=${user.id}`
     );
+    if (!bottomsResponse.ok) {
+      setError("No more bottoms!");
+    }
     const bottomsData = await bottomsResponse.json();
     if (bottomsData.length > 0) {
       setBottoms(bottomsData[0]);
+    }
+    if (!bottomsData.ok) {
+      setError("No more bottoms!");
     }
   }
 
@@ -42,9 +55,16 @@ function Outfit() {
     const shoesResponse = await fetch(
       `http://localhost:8080/clothing_item/by_type?type=shoes&userId=${user.id}`
     );
+    if (!shoesResponse.ok) {
+      setError("No more shoes!");
+    }
     const shoesData = await shoesResponse.json();
     if (shoesData.length > 0) {
       setShoes(shoesData[0]);
+    }
+
+    if (!shoesData.ok) {
+      setError("No more shoes!");
     }
   }
 
@@ -124,18 +144,19 @@ function Outfit() {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   return (
     <>
       <div className="outfit-container">
+        {error ? <div>{error}</div> : <div></div>}
         <div className="top-item">
           <h3>Top</h3>
           {top ? (
             <>
-              <img src={top.clothingImage} alt={top.clothingName} />
+              <img
+                className="small-top-css"
+                src={top.clothingImage}
+                alt={top.clothingName}
+              />
               <p>{top.clothingName}</p>
               <button onClick={handleTopDelete}> Delete</button>
             </>

@@ -214,16 +214,16 @@ export default function Weather() {
           Save Weather
         </button>
       </div>
-      <div className="weder-title">
+      <div className="small-top-css">
         <h3>Weather Data</h3>
         <div>{dataMsg ? <div>{dataMsg}</div> : <div></div>}</div>
         {weathers.length > 0 ? (
           weathers.map((weather) => (
-            <div className="weder-title" key={weather.weatherId}>
-              <p>Latitude: {weather.latitude}</p>
-              <p>Longitude: {weather.longitude}</p>
+            <div className="small-top-css" key={weather.weatherId}>
+              <p className="small-top-css">Latitude: {weather.latitude}</p>
+              <p className="small-top-css">Longitude: {weather.longitude}</p>
               <button
-                className="add-clothing-item-button"
+                className="add-clothing-item-button small-top-css"
                 onClick={() => handleDelete(weather.weatherId)}
                 type="button"
               >
