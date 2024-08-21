@@ -26,7 +26,7 @@ public class WeatherController {
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody Weather weather) {
-        
+
         Result<Weather> result = weatherService.saveWeather(weather);
 
         if(result.isSuccess()) {
