@@ -163,9 +163,15 @@ export default function Weather() {
 
   return (
     <>
-      <div>{weatherMsg ? <div>{weatherMsg}</div> : <div></div>}</div>
+      <div className="weder-title">
+        {weatherMsg ? (
+          <div className="weder-title">{weatherMsg}</div>
+        ) : (
+          <div></div>
+        )}
+      </div>
       <div className="weder-title">Item Form</div>
-      <div>
+      <div className="weder-title">
         <form onSubmit={handleSubmit}>
           <label>Longitude: </label>
           <input
@@ -181,10 +187,7 @@ export default function Weather() {
             onChange={(e) => setLatitudeData(e.target.value)}
           />
           <br />
-          <button
-            className="add-clothing-item-button weder-title"
-            type="submit"
-          >
+          <button className="add-clothing-item-button" type="submit">
             Enter Location
           </button>
         </form>
@@ -211,12 +214,12 @@ export default function Weather() {
           Save Weather
         </button>
       </div>
-      <div>
+      <div className="weder-title">
         <h3>Weather Data</h3>
         <div>{dataMsg ? <div>{dataMsg}</div> : <div></div>}</div>
         {weathers.length > 0 ? (
           weathers.map((weather) => (
-            <div key={weather.weatherId}>
+            <div className="weder-title" key={weather.weatherId}>
               <p>Latitude: {weather.latitude}</p>
               <p>Longitude: {weather.longitude}</p>
               <button
