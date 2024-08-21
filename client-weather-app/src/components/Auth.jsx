@@ -8,7 +8,6 @@ function Auth() {
   const [loginPassword, setLoginPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
   const [errorsMsg, setErrorsMsg] = useState("");
-  const [successMsg, setSuccessMessage] = useState("");
 
   async function handleRegister() {
     const response = await fetch("http://localhost:8080/app_user/register", {
@@ -22,7 +21,7 @@ function Auth() {
       }),
     });
     if (response.ok) {
-      setSuccessMessage("Registered SuccessFully!");
+      setErrorsMsg("Registered Successfully!");
     } else {
       setErrorsMsg("Failed to Register!");
     }
@@ -39,12 +38,13 @@ function Auth() {
         password: loginPassword,
       }),
     });
+    if (!response.ok) {
+      setErrorsMsg("Please enter a valid login!");
+    }
     const data = await response.json();
     if (response.ok) {
       setUser(data);
-      setSuccessMessage("Login success!");
-    } else {
-      setErrorsMsg("Login failed!");
+      setErrorsMsg("Login success!");
     }
   }
 
@@ -54,13 +54,7 @@ function Auth() {
 
   return (
     <>
-      <div>
-        {successMsg ? (
-          <div>{successMsg}</div>
-        ) : (
-          <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
-        )}
-      </div>
+      <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
 
       <div>
         {user ? (
