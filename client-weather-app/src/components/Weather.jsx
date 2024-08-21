@@ -7,15 +7,15 @@ export default function Weather() {
   const [latitudeData, setLatitudeData] = useState("");
   const { user } = useContext(UserContext);
   const { weatherData, setWeatherData } = useContext(WeatherContext);
-  const [errorsMsg, setErrorsMsg] = useState("");
-  const [dataErrorsMsg, setDataErrorsMsg] = useState("");
-  const [successMsg, setSuccessMessage] = useState("");
+  const [weatherMsg, setWeatherMsg] = useState("");
+  const [dataMsg, setDataMsg] = useState("");
+
   const [weathers, setWeathersData] = useState([]);
 
   useEffect(() => {
     async function fetchWeatherData() {
       if (!user) {
-        setDataErrorsMsg("User not logged in");
+        setDataMsg("User not logged in");
         return;
       }
 
@@ -24,7 +24,7 @@ export default function Weather() {
           `http://localhost:8080/weather/user/${user.id}`
         );
         if (!response.ok) {
-          setDataErrorsMsg(`Couldnt get the data, error with request!`);
+          setDataMsg(`Couldnt get the data, error with request!`);
           return;
         }
 
@@ -33,7 +33,7 @@ export default function Weather() {
         setWeathersData(data);
       } catch (error) {
         console.error("Error fetching weather data:", error);
-        setDataErrorsMsg("Error fetching weather data.");
+        setDataMsg("Error fetching weather data.");
       }
     }
     fetchWeatherData();
@@ -47,7 +47,21 @@ export default function Weather() {
       isNaN(longitudeData)
     ) {
       console.error("Invalid latitude or longitude values.");
-      setErrorsMsg("Please enter a valid number for latitude and longitude!");
+      setWeatherMsg("Please enter a valid number for latitude and longitude!");
+      return;
+    } else {
+      setWeatherMsg("");
+    }
+
+    if (
+      longitudeData > 180 ||
+      longitudeData < -180 ||
+      latitudeData > 90 ||
+      latitudeData < -90
+    ) {
+      setWeatherMsg(
+        "Latitude or Longitude exceeds max values or lowest value."
+      );
       return;
     }
 
@@ -66,12 +80,12 @@ export default function Weather() {
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        setErrorsMsg(`API request failed with status ${response.status}`);
+        console.log(`API request failed with status ${response.status}`);
       }
       const data = await response.json();
 
       if (!data.current_weather) {
-        setErrorsMsg("Please put a valid latitude or longitude.");
+        console.log("Needs a valid latitude or longitude.");
       }
 
       const currentWeather = data.current_weather;
@@ -99,7 +113,12 @@ export default function Weather() {
   function handleSaveWeather(event) {
     event.preventDefault();
     if (!user) {
-      setErrorsMsg("Need to be logged in to save weather!");
+      setDataMsg("Need to be logged in to save weather!");
+      return;
+    }
+
+    if (weathers.length > 2) {
+      setDataMsg("You can only save 3 latitudes and longitudes at a time.");
       return;
     }
 
@@ -116,9 +135,9 @@ export default function Weather() {
       }),
     }).then((response) => {
       if (response.ok) {
-        setSuccessMessage("Added successfully!");
+        setDataMsg("Added successfully!");
       } else {
-        setErrorsMsg("Error Submitting Form");
+        setDataMsg("Error Submitting Latitude and Longitude");
       }
     });
   }
@@ -144,11 +163,7 @@ export default function Weather() {
 
   return (
     <>
-      {successMsg ? (
-        <div>{successMsg}</div>
-      ) : (
-        <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
-      )}
+      <div>{weatherMsg ? <div>{weatherMsg}</div> : <div></div>}</div>
       <div className="weder-title">Item Form</div>
       <div>
         <form onSubmit={handleSubmit}>
@@ -198,7 +213,7 @@ export default function Weather() {
       </div>
       <div>
         <h3>Weather Data</h3>
-        {dataErrorsMsg && <div>{dataErrorsMsg}</div>}
+        <div>{dataMsg ? <div>{dataMsg}</div> : <div></div>}</div>
         {weathers.length > 0 ? (
           weathers.map((weather) => (
             <div key={weather.weatherId}>
