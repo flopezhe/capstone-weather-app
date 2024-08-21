@@ -170,7 +170,7 @@ export default function Weather() {
           <div></div>
         )}
       </div>
-      <div className="weder-title">Item Form</div>
+      <div className="weder-title">Enter Details Below:</div>
       <div className="weder-title">
         <form onSubmit={handleSubmit}>
           <label>Longitude: </label>
