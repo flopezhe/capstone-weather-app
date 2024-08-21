@@ -57,7 +57,8 @@ public class ClothingItemController {
 //    }
 
     @PutMapping("/{clothingItemId}")
-    public ResponseEntity<Object> update(@PathVariable String clothingItemId, @RequestBody ClothingItem clothingItem) {
+    public ResponseEntity<Object> update(@PathVariable String clothingItemId,
+                                         @RequestBody ClothingItem clothingItem) {
         if(!clothingItemId.equalsIgnoreCase(clothingItem.getId())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
