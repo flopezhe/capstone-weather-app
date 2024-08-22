@@ -59,7 +59,9 @@ function Auth() {
 
   return (
     <>
-      <div>{errorsMsg ? <div>{errorsMsg}</div> : <div></div>}</div>
+      <div className="weder-title">
+        {errorsMsg ? <div>{errorsMsg}</div> : <div></div>}
+      </div>
 
       <div>
         {user ? (

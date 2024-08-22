@@ -21,16 +21,17 @@ function Outfit() {
       const secondLayerTopResponse = await fetch(
         `http://localhost:8080/clothing_item/by_type?type=second_layer_top&userId=${user.id}`
       );
+
       if (!secondLayerTopResponse.ok) {
-        setError("No more tops!");
+        setError("No More Tops!");
       }
       const secondLayerTopData = await secondLayerTopResponse.json();
-      if (secondLayerTopData.length > 0) {
-        setTop(secondLayerTopData[0]);
-      }
-
       if (!secondLayerTopData.ok) {
         setError("No more tops!");
+      }
+      if (secondLayerTopData.length > 0) {
+        setTop(secondLayerTopData[0]);
+        setError("");
       }
     }
   }
@@ -43,11 +44,12 @@ function Outfit() {
       setError("No more bottoms!");
     }
     const bottomsData = await bottomsResponse.json();
-    if (bottomsData.length > 0) {
-      setBottoms(bottomsData[0]);
-    }
     if (!bottomsData.ok) {
       setError("No more bottoms!");
+    }
+    if (bottomsData.length > 0) {
+      setBottoms(bottomsData[0]);
+      setError("");
     }
   }
 
@@ -59,12 +61,13 @@ function Outfit() {
       setError("No more shoes!");
     }
     const shoesData = await shoesResponse.json();
-    if (shoesData.length > 0) {
-      setShoes(shoesData[0]);
-    }
 
     if (!shoesData.ok) {
       setError("No more shoes!");
+    }
+    if (shoesData.length > 0) {
+      setShoes(shoesData[0]);
+      setError("");
     }
   }
 
@@ -121,19 +124,25 @@ function Outfit() {
   function handleTopDelete() {
     fetch(`http://localhost:8080/clothing_item/${top.id}`, {
       method: "DELETE",
-    }).then(setTop());
+    })
+      .then(setTop())
+      .then(setError("Deleted Successfully!"));
   }
 
   function handleBottomsDelete() {
     fetch(`http://localhost:8080/clothing_item/${bottoms.id}`, {
       method: "DELETE",
-    }).then(setBottoms());
+    })
+      .then(setBottoms())
+      .then(setError("Deleted Successfully!"));
   }
 
   function handleShoesDelete() {
     fetch(`http://localhost:8080/clothing_item/${shoes.id}`, {
       method: "DELETE",
-    }).then(setShoes());
+    })
+      .then(setShoes())
+      .then(setError("Deleted Successfully!"));
   }
 
   if (!user) {
