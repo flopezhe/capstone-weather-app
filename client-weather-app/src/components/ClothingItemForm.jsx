@@ -56,7 +56,11 @@ function ClothingItemForm() {
 
   return (
     <>
-      {errorsMsg ? <div>{errorsMsg}</div> : <div> Item Form</div>}
+      {errorsMsg ? (
+        <div className="weder-title">{errorsMsg}</div>
+      ) : (
+        <div className="weder-title"> Item Form</div>
+      )}
       <form onSubmit={handleSubmit} className="weder-title">
         <div>
           <label>Clothing Type:</label>
