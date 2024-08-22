@@ -18,7 +18,7 @@ public class AppUserController {
         this.appUserService = appUserService;
     }
 
-    @PostMapping("/register")  // Specific route for registration
+    @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody AppUser appUser) {
         Result<AppUser> result = appUserService.createAppUser(appUser);
 
@@ -29,7 +29,7 @@ public class AppUserController {
         return ErrorResponse.build(result);
     }
 
-    @PostMapping("/login")  // Ensure you have a login route
+    @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody AppUser appUser) {
         AppUser foundUser = appUserService.getAppUser(appUser.getUserName());
 
