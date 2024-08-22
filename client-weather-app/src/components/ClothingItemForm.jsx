@@ -89,7 +89,7 @@ function ClothingItemForm() {
         <div>
           <label>Clothing Image URL:</label>
           <input
-            type="text"
+            type="url"
             name="clothingImage"
             value={formData.clothingImage}
             onChange={handleChange}

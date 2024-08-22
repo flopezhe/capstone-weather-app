@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "./UserContext";
+import { useWeather } from "./WeatherContext";
 
 function Auth() {
   const [registerUsername, setRegisterUsername] = useState("");
@@ -8,6 +9,8 @@ function Auth() {
   const [loginPassword, setLoginPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
   const [errorsMsg, setErrorsMsg] = useState("");
+
+  const { weatherData, setWeatherData } = useWeather();
 
   async function handleRegister() {
     const response = await fetch("http://localhost:8080/app_user/register", {
@@ -44,12 +47,14 @@ function Auth() {
     const data = await response.json();
     if (response.ok) {
       setUser(data);
+      setWeatherData(null);
       setErrorsMsg("Login success!");
     }
   }
 
   function handleLogout() {
     setUser(null);
+    setWeatherData(null);
   }
 
   return (
